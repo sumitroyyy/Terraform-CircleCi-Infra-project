@@ -1,6 +1,9 @@
 #Define the provider
 provider "aws" {
-    region = "ap-southeast-1"
+    region = "us-west-1"
+    access_key = ""
+    secret_key = ""
+    
 }
 
 #Create a virtual network
@@ -159,7 +162,7 @@ resource "null_resource" "nullmount" {
       "sudo mkfs.ext4 /dev/xvdh",
       "sudo mount /dev/xvdh /var/www/html",
       "sudo rm -rf /var/www/html/*",
-      "sudo git clone https://github.com/vineets300/Webpage1.git  /var/www/html"
+      "sudo git clone https://github.com/sumitroyyy/Terraform-CircleCi-Infra-project  /var/www/html"
     ]
   }
 }
@@ -173,7 +176,7 @@ locals {
 resource "aws_s3_bucket" "demonewbucket12345" {
   bucket = "demonewbucket12345"
   acl    = "public-read-write"
-  region = "ap-southeast-1"
+  region = "us-west-1"
   
   versioning {
     enabled = true
@@ -185,7 +188,7 @@ resource "aws_s3_bucket" "demonewbucket12345" {
   }
 
  provisioner "local-exec" {
-    command = "git clone https://github.com/vineets300/Webpage1.git web-server-image"
+    command = "git clone https://github.com/sumitroyyy/Terraform-CircleCi-Infra-project  web-server-image"
  }
 
 }
