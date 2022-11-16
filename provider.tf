@@ -176,7 +176,7 @@ locals {
 resource "aws_s3_bucket" "demonewbucket12345" {
   bucket = "demonewbucket12345"
   acl    = "public-read-write"
-  region = "us-west-1"
+  
   
   versioning {
     enabled = true
