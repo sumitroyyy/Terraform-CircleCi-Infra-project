@@ -104,7 +104,7 @@ resource "local_file" "Web-Key" {
 
 #Create your webserver instance
 resource "aws_instance" "Web" {
-    ami = "ami-0adbe59da7d24a349"
+    ami = "ami-017c001a88dd93847"
     instance_type = "t2.micro"
     tags = {
         Name = "WebServer1"
@@ -173,8 +173,8 @@ locals {
 }
 
 #Create a bucket to upload your static data like images
-resource "aws_s3_bucket" "demonewbucket12345" {
-  bucket = "demonewbucket12345"
+resource "aws_s3_bucket" "demonewbucket123" {
+  bucket = "demonewbucket123"
   acl    = "public-read-write"
   
   
@@ -183,7 +183,7 @@ resource "aws_s3_bucket" "demonewbucket12345" {
   }
 
   tags = {
-    Name = "demonewbucket12345"
+    Name = "demonewbucket123"
     Environment = "Prod"
   }
 
@@ -195,16 +195,16 @@ resource "aws_s3_bucket" "demonewbucket12345" {
 
 #Allow public access to the bucket
 resource "aws_s3_bucket_public_access_block" "public_storage" {
- depends_on = [aws_s3_bucket.demonewbucket12345]
- bucket = "demonewbucket12345"
+ depends_on = [aws_s3_bucket.demonewbucket123]
+ bucket = "demonewbucket123"
  block_public_acls = false
  block_public_policy = false
 }
 
 #Upload your data to S3 bucket
 resource "aws_s3_bucket_object" "Object1" {
-  depends_on = [aws_s3_bucket.demonewbucket12345]
-  bucket = "demonewbucket12345"
+  depends_on = [aws_s3_bucket.demonewbucket123]
+  bucket = "demonewbucket123"
   acl    = "public-read-write"
   key = "Demo1.PNG"
   source = "web-server-image/Demo1.PNG"
@@ -214,7 +214,7 @@ resource "aws_s3_bucket_object" "Object1" {
 resource "aws_cloudfront_distribution" "tera-cloufront1" {
     depends_on = [ aws_s3_bucket_object.Object1]
     origin {
-        domain_name = aws_s3_bucket.demonewbucket12345.bucket_regional_domain_name
+        domain_name = aws_s3_bucket.demonewbucket123.bucket_regional_domain_name
         origin_id = local.s3_origin_id
     }   
     enabled = true
